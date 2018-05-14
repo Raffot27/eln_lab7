@@ -6,12 +6,10 @@
 ;* located in the examples subdirectory of the *
 ;* Freescale CodeWarrior for the HC12 Program directory *
 ;**************************************************************
-
 ; Include derivative-specific definitions
-INCLUDE 'derivative.inc'
-
+               INCLUDE 'derivative.inc' 		
 ; export symbols
-XDEF Entry, _Startup, main
+     XDEF Entry, _Startup, main
 ; we use export 'Entry' as symbol. This allows us to
 ; reference 'Entry' either in the linker .prm file
 ; or from C/C++ later on
@@ -21,15 +19,23 @@ main:
 _Startup:
 Entry:
 ; Insert here your code
-
   LDAA #$F0 ; load the DDRT register initialization value (bits 7 to 4 at ‘1’) in A
   STAA DDRT ; write the content of A to the DDRT register
   STAA PTT ; turn off the 4 LEDsDDRT (writing ‘1’)
-  LDX  #1000 ; X=1000
-  
-loop1:  CMPA #0
-        BGE  YESX
-        BRA  NOX
 
-YESX: LDAA 
-      EORA    
+  LDX #1000 ; X=1000
+
+L1:  CPX #0
+     BGE YESX
+     ASR 1,X-
+     LDY #1000
+
+L2: CPY #0
+    BGE L2
+    ASR 1,X-
+    
+YESX: EORA #$F0
+      STAA DDRT
+      STAA PTT
+      LDX  #1000
+      BLE  L1
