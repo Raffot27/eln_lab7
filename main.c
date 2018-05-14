@@ -13,27 +13,25 @@
 void main(void) 
 {
   int i,j,k,z;
+  
   /* put your own code here */
   DDRT = 0xF0; // set PTT4 to PTT7 as outputs
   PTT = 0xF0; // set PTT4 to PTT7 to 1 (LED off)
   
- 
-
-
   for(;;) 
   {
-   for(i=0; i<MYWAIT; i++);
-   LED1= LED4 xor 1;
-   for(j=0; j<MYWAIT; j++);
-   LED2= LED1;
-   for(k=0; k<MYWAIT; k++);
-   LED3=LED2;
-   for(z=0; z<MYWAIT; z++);
-   LED4=LED3;
-   }
+     for(i=0; i<MYWAIT; i++);
+       LED1= LED4 ^ 1;
+       for(j=0; j<MYWAIT; j++);
+         LED2= LED1;
+         for(k=0; k<MYWAIT; k++);
+           LED3=LED2;
+           for(z=0; z<MYWAIT; z++);
+             LED4=LED3;
+   
   
   
-   _FEED_COP(); /* feeds the dog */
+    _FEED_COP(); /* feeds the dog */
   } /* loop forever */
-  /* please make sure that you never leave main */
+    /* please make sure that you never leave main */
 }
